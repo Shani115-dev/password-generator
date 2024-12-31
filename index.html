@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .password-box {
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #f7f7f7;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 1rem 0;
+            color: #444;
+        }
+
+        .controls {
+            margin: 1rem 0;
+        }
+
+        .controls label {
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+
+        .controls input[type="number"] {
+            width: 60px;
+            padding: 0.4rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .generate-btn {
+            background: #6a11cb;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .generate-btn:hover {
+            background: #2575fc;
+        }
+
+        .copy-btn {
+            background: #6a11cb;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            color: #2575fc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Strong Password Generator</h1>
+        <!-- Display Generated Password -->
+        <div id="passwordBox" class="password-box">Click "Generate" to create a password</div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <label for="length">Password Length:</label>
+            <input type="number" id="length" min="6" max="20" value="12">
+        </div>
+
+        <!-- Buttons -->
+        <button class="generate-btn" onclick="generatePassword()">Generate Password</button>
+       <button id="copyBtn" class="copy-btn" onclick="copyPassword()">Copy </button>
+    </div>
+
+    <script>
+        // Function to Generate a Strong Password
+        function generatePassword() {
+            const length = document.getElementById("length").value;
+            const passwordBox = document.getElementById("passwordBox");
+
+            // Define possible characters for the password
+            const lowercase = "abcdefghijklmnopqrstuvwxyz";
+            const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const numbers = "0123456789";
+            const symbols = "!@#$%^&*()_-+=<>?{}[]~";
+
+            const allCharacters = lowercase + uppercase + numbers + symbols;
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * allCharacters.length);
+                password += allCharacters[randomIndex];
+            }
+
+            passwordBox.textContent = password; // Display generated password
+        }
+
+        // Function to Copy Password to Clipboard
+        function copyPassword() {
+            const passwordBox = document.getElementById("passwordBox");
+            const password = passwordBox.textContent;
+
+            if (password !== "Click \"Generate\" to create a password") {
+                navigator.clipboard.writeText(password).then(() => {
+                    alert("Password copied to clipboard!");
+                }).catch(err => {
+                    console.error("Failed to copy password:", err);
+                });
+            }
+        }
+    </script>
+
+</body>
+
+</html>
